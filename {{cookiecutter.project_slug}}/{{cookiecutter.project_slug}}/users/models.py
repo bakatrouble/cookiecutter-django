@@ -1,30 +1,47 @@
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin
 from django.db import models
+from django.utils import timezone
+from django.utils.translation import ugettext_lazy as _
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, password=None):
-        if not username:
-            raise ValueError('Users must have a username')
+    use_in_migrations = True
 
-        user = self.model(username=username)
+    def _create_user(self, username, password, **extra_fields):
+        if not username:
+            raise ValueError('The given username must be set')
+        username = self.model.normalize_username(username)
+        user = self.model(username=username, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, username, password):
-        user = self.create_user(username, password)
-        user.is_superuser = True
-        user.save(using=self._db)
-        return user
+    def create_user(self, username, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        return self._create_user(username, password, **extra_fields)
+
+    def create_superuser(self, username, password, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self._create_user(username, password, **extra_fields)
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = []
 
     username = models.CharField(max_length=256, unique=True)
-    is_superuser = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    date_joined = models.DateTimeField(default=timezone.now)
 
     objects = UserManager()
 
@@ -37,13 +54,7 @@ class User(AbstractBaseUser):
     def __str__(self):
         return self.get_full_name()
 
-    def has_perm(self, perm, obj=None):
-        return True
-
-    def has_module_perms(self, app_label):
-        return True
-
-    @property
-    def is_staff(self):
-        return self.is_superuser
+    class Meta:
+        verbose_name = _('user')
+        verbose_name_plural = _('users')
 
