@@ -1,6 +1,8 @@
-[uwsgi]
-socket = /tmp/{{cookiecutter.project_slug}}.sock
-module = config.wsgi:application
-master = true
-processes = 4
-enable-threads = true
+uwsgi:
+  socket: /tmp/{{cookiecutter.project_slug}}.sock
+  module: config.wsgi:application
+  chmod-socket: 666
+  master: true
+  processes: 4
+  enable-threads: true
+    
