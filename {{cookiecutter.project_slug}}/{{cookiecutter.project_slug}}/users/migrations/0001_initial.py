@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 
 from django.db import migrations, models
 import django.utils.timezone
-import velly_back.users.models
+import {{cookiecutter.project_slug}}.users.models
 
 
 class Migration(migrations.Migration):
@@ -35,7 +35,7 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'users',
             },
             managers=[
-                ('objects', velly_back.users.models.UserManager()),
+                ('objects', {{cookiecutter.project_slug}}.users.models.UserManager()),
             ],
         ),
     ]
