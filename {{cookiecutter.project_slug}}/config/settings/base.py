@@ -1,13 +1,13 @@
 import environ
+import os
 
 ROOT_DIR = environ.Path(__file__) - 3
 APPS_DIR = ROOT_DIR.path('{{ cookiecutter.project_slug }}')
 
 env = environ.Env()
-READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
 
-if READ_DOT_ENV_FILE:
-    env_file = str(ROOT_DIR.path('.env'))
+env_file = str(ROOT_DIR.path('.env'))
+if os.path.exists(env_file):
     print('Loading : {}'.format(env_file))
     env.read_env(env_file)
 
@@ -66,8 +66,7 @@ ADMINS = [
 MANAGERS = ADMINS
 
 DATABASES = {
-    'default': env.db('DATABASE_URL',
-                      default='postgres://localhost/{{cookiecutter.project_slug}}'),
+    'default': env.db('DATABASE_URL', default='sqlite://db.sqlite3'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
