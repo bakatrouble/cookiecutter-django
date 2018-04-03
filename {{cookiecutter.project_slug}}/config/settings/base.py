@@ -140,5 +140,3 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 AUTH_USER_MODEL = 'users.User'
-
-ADMIN_URL = r'^admin/'

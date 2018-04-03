@@ -5,7 +5,7 @@ from django.contrib import admin
 from django.views import defaults as default_views
 
 urlpatterns = [
-    url(settings.ADMIN_URL, admin.site.urls),
+    url(r'^admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
