@@ -66,7 +66,7 @@ ADMINS = [
 MANAGERS = ADMINS
 
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='sqlite://db.sqlite3'),
+    'default': env.db('DATABASE_URL', default='sqlite:///db.sqlite3'),
 }
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 

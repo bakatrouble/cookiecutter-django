@@ -5,5 +5,7 @@
     "email": "bakatrouble@gmail.com",
     "domain_name": "example.com",
     "version": "0.1.0",
-    "timezone": "UTC"
+    "timezone": "UTC",
+    "production_dir": "/var/www",
+    "production_user": "www-data"
 }

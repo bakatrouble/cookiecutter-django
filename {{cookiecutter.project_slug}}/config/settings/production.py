@@ -2,20 +2,20 @@ from .base import *
 
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-SECURE_HSTS_SECONDS = 518400
-SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
-    'DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', default=True)
-SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
-    'DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', default=True)
-SECURE_BROWSER_XSS_FILTER = True
-SESSION_COOKIE_SECURE = True
-SESSION_COOKIE_HTTPONLY = True
-SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
-CSRF_COOKIE_SECURE = True
-CSRF_COOKIE_HTTPONLY = True
-X_FRAME_OPTIONS = 'DENY'
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+#
+# SECURE_HSTS_SECONDS = 518400
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = env.bool(
+#     'DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS', default=True)
+# SECURE_CONTENT_TYPE_NOSNIFF = env.bool(
+#     'DJANGO_SECURE_CONTENT_TYPE_NOSNIFF', default=True)
+# SECURE_BROWSER_XSS_FILTER = True
+# SESSION_COOKIE_SECURE = True
+# SESSION_COOKIE_HTTPONLY = True
+# SECURE_SSL_REDIRECT = env.bool('DJANGO_SECURE_SSL_REDIRECT', default=True)
+# CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_HTTPONLY = True
+# X_FRAME_OPTIONS = 'DENY'
 
 ALLOWED_HOSTS = env.list('DJANGO_ALLOWED_HOSTS', default=['{{cookiecutter.domain_name}}', ])
 
@@ -60,11 +60,11 @@ LOGGING = {
         },
     },
     'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false', ],
-            'class': 'django.utils.log.AdminEmailHandler'
-        },
+        # 'mail_admins': {
+        #     'level': 'ERROR',
+        #     'filters': ['require_debug_false', ],
+        #     'class': 'django.utils.log.AdminEmailHandler'
+        # },
         'console': {
             'level': 'DEBUG',
             'class': 'logging.StreamHandler',
